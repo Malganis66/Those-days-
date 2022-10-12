@@ -66,3 +66,25 @@ export const removeLink = async(req,res)=>{
         return res.status(500).json({error: "error del server"})
     }
 }
+
+export const updateLink = async(req,res)=>{
+    try {
+        const {id} = req.params
+        const {longLink} = req.body
+        const link = await Link.findById(id)
+        if(!link) return res.status(404).json({error: "no existe el link"})
+
+        if(!link.uid.equals(req.uid)) {
+            return res.status(401).json({error: "its not your id"})
+        }
+        link.longLink = longLink
+        await link.save()
+        res.json({link})
+    } catch (error) {
+        console.log(error)
+        if(error.kind === "ObjectId"){
+        return res.status(403).json({error: "formato id invalido"})
+        }
+        return res.status(500).json({error: "error del server"})
+    }
+}
