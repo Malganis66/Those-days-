@@ -6,7 +6,7 @@ import { bodyLinkValidator, paramLinkValidator } from '../middlewares/validation
 const router = Router()
 
 router.get('/',requireToken,getLinks)
-router.get("/:id",requireToken,getLink)
+router.get("/:nanoLink",getLink)
 router.post('/',requireToken,bodyLinkValidator,createLink)
 router.delete("/:id",requireToken,paramLinkValidator,removeLink)
 router.patch("/:id",requireToken,paramLinkValidator,bodyLinkValidator,updateLink)
